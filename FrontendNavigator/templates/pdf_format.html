@@ -1,0 +1,69 @@
+{% extends 'pdfbase.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<ul>
+
+
+         <span style="color:purple">REPORT: {{all_details.id}}</span></a>
+        </div>
+<br>
+
+<br>
+ <b><span style="color:green"> <h2>{{all_details.title}}</h2></span></b>
+ 
+
+ <i>{{all_details.created_at}} </i><br>
+ 
+ {{all_details.body}} 
+<br>
+
+</ul>
+
+<div>
+{{html_table | safe }}
+</div>
+
+
+
+<br>
+{% if all_details.id == 1 %}
+
+yep image not loaded...
+<img src="{% static 'AnalysisEngine/img/id1.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 2 %}
+
+<img src="{% static 'AnalysisEngine/img/id2.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 3 %}
+
+<img src="{% static 'AnalysisEngine/img/id3.png'%}" width=700 height=auto />
+
+{% endif %}
+
+{% if all_details.id == 4 %}
+
+<img src="{% static 'AnalysisEngine/img/id4.png'%}" width=700 height=auto />
+<img src="{% static 'AnalysisEngine/img/id44.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 5 %}
+
+<img src="{% static 'AnalysisEngine/img/id5.png'%}" width=700 height=auto />
+
+{% endif %}
+
+
+
+
+
+
+</ul>
+
+
+{% endblock content %}

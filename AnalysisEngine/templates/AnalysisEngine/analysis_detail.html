@@ -1,0 +1,67 @@
+{% extends 'FrontendNavigator/base.html' %}
+
+  
+
+
+{% block content %}
+{% load static%}
+<ul>
+
+
+<br>
+<div align="right">
+ <a href="{% url 'pdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
+</div>
+
+<br>
+ <b><span style="color:green"> {{all_details.title}}</span></b><br>
+ 
+ 
+  <i>{{all_details.created_at}} </i><br>
+ 
+{{all_details.body}} 
+
+<br>
+ 
+
+
+<small><b>Top 5 records of the dataset</b></small>
+<div>
+{{html_table_template| safe }}
+</div>
+</ul>
+
+<br>
+{% if all_details.id == 1 %}
+
+<img src="{% static 'img/id1.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 2 %}
+
+<img src="{% static 'img/id2.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 3 %}
+
+<img src="{% static 'img/id3.png'%}" width=700 height=auto />
+
+{% endif %}
+
+{% if all_details.id == 4 %}
+
+<img src="{% static 'img/id4.png'%}" width=700 height=auto />
+<img src="{% static 'img/id44.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 5 %}
+
+<img src="{% static 'img/id5.png'%}" width=700 height=auto />
+
+{% endif %}
+{% if all_details.id == 6 %}
+
+<img src="{% static 'img/id6.png'%}" width=700 height=auto />
+
+{% endif %}
+{% endblock content %}
