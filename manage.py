@@ -80,7 +80,7 @@ def main():
         #No. of tourists destinations distribution map
 
 
-        data=pd.read_csv("E:\\ANACONDAA\\input\\nepal-district.csv")
+        data=pd.read_csv("assets/nepal-district.csv")
 
 
         df2=data[['District','Zones','Development Regions','Tourist places']]
@@ -127,7 +127,7 @@ def main():
         mpl.pyplot.clf()
 
         #Gross foreign exchange earning from tourism
-        data=pd.read_csv("E:\\ANACONDAA\\input\\gross foreign exchange earning from tourism.csv",header=0,index_col=0)
+        data=pd.read_csv("assets/gross foreign exchange earning from tourism.csv",header=0,index_col=0)
         data.plot()
        
         mpl.pyplot.savefig('AnalysisEngine/static/img/pid1.png',dpi=600,bbox_inches='tight')
