@@ -87,7 +87,7 @@ def main():
         
         #read shape file
 
-        fp="E:\\ANACONDAA\\input\\NepalMaps-master\\NepalMaps-master\\baselayers\\NPL_adm\\NPL_adm3.shp"
+        fp="NepalMaps-master\\baselayers\\NPL_adm\\NPL_adm3.shp"
 
         map_df = gpd.read_file(fp)
 
