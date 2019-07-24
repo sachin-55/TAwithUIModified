@@ -13,13 +13,13 @@ from django.template.response import TemplateResponse
 from django.template.loader import render_to_string
 
 # Third party imports
-import matplotlib as mpl
-mpl.use("Agg")
-import numpy as np
+# import matplotlib as mpl
+# mpl.use("Agg")
+# import numpy as np
 import pandas as pd
-import seaborn as sns 
-import base64
-import geopandas as gpd
+# import seaborn as sns 
+# import base64
+# import geopandas as gpd
 
 # Local application imports
 from .models import Analysis
