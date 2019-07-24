@@ -18,12 +18,14 @@ from django.urls import path
 from django.conf.urls import url , include
 from rest_framework.urlpatterns import format_suffix_patterns
 from APIEngine import views
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     url('',include('FrontendNavigator.urls')) ,
     url('analysis/',include('AnalysisEngine.urls')) ,
     url('predictions/',include('PredictionEngine.urls')) ,
     path('datasets/', views.DataJASON.as_view()),
+    path('search/',include('SearchEngine.urls')),
     
 
 ]

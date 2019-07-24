@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def searchView(request):
+    context={
+        'query': request.POST.get('query'),
+        'message':"Hey What are you searching",
+    }
+
+    return render(request,'searchtest.html',context)
