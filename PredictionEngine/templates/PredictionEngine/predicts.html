@@ -6,51 +6,76 @@
 <div align="right">
  <a href="{% url 'ppdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
 </div>  {% endcomment %}
+<style>
+.predictionfrom{
+  background-color:lightgray;
+  margin: -20px 0px 0px 0px;
+  padding:0px 0px 0px 20px;
 
+}
+input[type='text']{
+  height:30px;
+  width:500px;
+}
+select{
+  height:30px;
+  width:500px;
+}
+input[type='checkbox']{
+  width:20px;
+  height:20px;
+}
 
+</style>
 
+<div class="predictionfrom">
 <form method="post">
 {% csrf_token %}
-<b>NAME OF LOCATION:</b>
-<input type="text" name="place" placeholder="Enter name of location" ><br><br>
- MAIN PURPOSE OF TOURIST VISIT:<br>
+<table>
+<tr><td>
+<b>NAME OF LOCATION:</b><br>
+<br></td><td>
+<input type="text" name="place" placeholder="Enter name of location" >  </td></tr>
+ <tr><td><b>MAIN PURPOSE OF TOURIST VISIT:</b><br>
+<br></td><td>
  <select name="Major purpose of visit">
     
     <option value="Treeking">Treeking</option>
     <option value="Treeking and Mountaineering">Treeking and Mountaineering</option>
     <option value="holiday and pleasure">holiday and pleasure</option>
     <option value="Pilgrimage visit">Pilgrimage visit</option>
-  </select>
-  <br>
-  <br>
-<b>ACCESSIBILITY STATUS :</b>
+  </select></td></tr>
+<tr><td>
+<b>ACCESSIBILITY STATUS :</b><br>
+<br></td><td>
  <select name="ACCESSIBILITY STATUS">
     <option value="p">POOR</option>
     <option value="f">FAIR</option>
     <option value="g">GOOD</option>
     <option value="b">BETTER</option>
-  </select>
-  <br>
-  <br>
-<b>ACCOMODATION STATUS :</b>
+  </select></tr></td>
+<tr><td>
+<b>ACCOMODATION STATUS :</b><br>
+<br></td><td>
  <select name="ACCOMODATION STATUS">
     <option value="p">POOR</option>
     <option value="f">FAIR</option>
     <option value="g">GOOD</option>
     <option value="b">BETTER</option>
-  </select>
-  <br>
-  <br>
-<b>HEALTH SERVICES/MEDICAL STATUS :</b>
+  </select></tr></td>
+  <tr><td>
+<b>HEALTH SERVICES/MEDICAL STATUS :</b><br>
+<br></td><td>
  <select name="MED STATUS">
     <option value="p">POOR</option>
     <option value="f">FAIR</option>
     <option value="g">GOOD</option>
     <option value="b">BETTER</option>
-  </select>
-  <br>
-  <br>
+  </select></tr></td>
+  
+  <tr><td>
 <b>TOURISTS ACTIVITIES IN THE LOCATION:</b><br>
+<br></td><td>
 <input type="checkbox" name=C1 value="1">Mountain climbing/ Mountaineering<br>
 <input type="checkbox" name=C2 value="1">Trekking/hiking<br>
 <input type="checkbox" name=C3 value="1">Scenery,birds,animals watching /Photography<br>
@@ -65,17 +90,19 @@
 <input type="checkbox" name=C12 value="1">Bicycle/Horse riding<br>
 <input type="checkbox" name=C13 value="1">jungle safari /Elephant riding/hunting<br>
 <input type="checkbox" name=C14 value="1">Indoor Enjoyment <br>
-<input type="checkbox" name=C15 value="1">Meditaion /religious activities<br>
+<input type="checkbox" name=C15 value="1">Meditaion /religious activities<br><br>
+<br>
+</tr></td>
 
-<br>
-<br>
-<b>NUMBER OF NEARBY TOURISTS SPOTS/PLACES TO VISIT:</b>
-<input type="text" name="spots" placeholder="Enter no of spots/places">
-<br>
-<br>
+<tr><td>
+<b>NUMBER OF NEARBY TOURISTS SPOTS/PLACES TO VISIT:</b><br>
+<br></td><td>
+<input type="text" name="spots" placeholder="Enter no of spots/places"></td></tr>
+<tr><td colspan="2" align="center">
 <b><input type="submit" name="S" value="PREDICT THE PERCENTAGE OF TOURIST ARRIVALS "> </b>
+</td></tr>
 </form>
-<br>
+<br><tr><td  colspan="2">
 location name:{{place}}<br>
 Predicted percentage of tourist arrival out of total tourist arrivals:<b>{{new_prediction}}</b>
 
@@ -88,5 +115,8 @@ RECORDS:<br>
 </b>
 <br>
 {{message}}
+</tr></td>
 
+</table>
+</div>
 {% endblock content %}
