@@ -3,6 +3,7 @@
 
 {% block content %}
 {% load static %}
+<div style="background-color:rgba(209, 235, 215,0.7); margin-top:-20px; padding-bottom:30px;">
 <ul>
 
 
@@ -28,13 +29,33 @@
 {{html_table_template| safe }}
 </div>
 </ul>
+</br></br>
+<div style="background-color:rgba(182, 219, 191,0.7); padding:20px;">
+<div style="padding-left:20px;font-size:25px;">
+Select year 
+<div style="display:inline-block;">
 
+<form method="GET" action="{% url 'predict_detail' 1 %}" value="{{request.GET.selectyear}}">{% csrf_token %}
+<select name="selectyear">
+  <option value="2018">2018</option>
+  <option value="2019">2019</option>
+  <option value="2020">2020</option>
+</select>
+<input type="submit" value="Predict">
+</form>
+</div>
+</div><br>
+<span style="padding-bottom:50px; font-size:20px; color:#26a307; padding-left:20px;">Foreign exchange earning in {{year}}(in NPR million):<b>{{next_year_value}}</b></span>
+</div>
+<br>
+<div style="padding-left:30px;">
 <img align="middle" src="data:image/png;base64,{{image_base64}}" alt="Sorry there's something wrong with py script .Please download analysis to see figure" width=700 height=auto />
 
 <br>
+<br><br>
+<img src="{% static '../static/img/sarima_result.png'%}" width=700 height=auto />
 
-<img src="{% static 'PredictionEngine/static/img/sarima_result.png'%}" width=700 height=auto />
-
+<br><br>
 {% if  image_base64g %}
 <img src="data:image/png;base64,{{image_base64g}}", width=700 height=auto />
 
@@ -59,12 +80,11 @@
 {% endif %}
 
 <br>
-<span style="padding-bottom:50px; font-size:20px; color:#26a307; padding-left:20px;">Foreign exchange earning in 2018(in NPR million):<b>{{next_year_value}}</b></span>
 
 
 
+</div>
 
-
-
+</div>
 
 {% endblock content %}

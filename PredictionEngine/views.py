@@ -111,6 +111,9 @@ def PDFF(request,id,*args, **kwargs):
 
 def predict_detail(request,id):
     if (id==1):
+        find_year=2018
+        if request.method== 'GET'and 'selectyear' in request.GET :
+            find_year=int(request.GET.get('selectyear'))
         #data collecting...converting dataset to html....
         data=pd.read_csv("assets\gross foreign exchange earning from tourism.csv",header=0,index_col=0)
         df=data.iloc[:5]
@@ -200,7 +203,7 @@ def predict_detail(request,id):
             X=dataset.iloc[:,0].values
             Y=dataset.iloc[:,1].values
             b0,b1 = coefficients(X,Y)
-            y_predict= b0 + b1 * test_x
+            y_predict= b0 + b1 * test_x 
             return y_predict
 
 
@@ -233,7 +236,8 @@ def predict_detail(request,id):
         image_base64g = base64.b64encode(g.getvalue()).decode('utf-8').replace('\n', '')
         g.close()
         mpl.pyplot.clf()
-        x=2020
+        
+        x=find_year
         nexts=linear_reg_perdict(dataset,x)
 
 
@@ -250,6 +254,7 @@ def predict_detail(request,id):
         'image_base64':image_base64 ,
         'image_base64g':image_base64g ,
         'next_year_value':nexts ,
+        'year':x,
        
         }
         return TemplateResponse(request,'PredictionEngine/predict_detail.html',context)
