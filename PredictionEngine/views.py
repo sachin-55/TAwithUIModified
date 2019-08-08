@@ -618,7 +618,7 @@ def predict_detail(request,id):
 
         # Model evaluation and forecast
         model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
-        forecast=model_fitted.forecast(len(df)-250)
+        forecast=model_fitted.forecast(len(df)-214)
         print(forecast)
         forecast=np.exp(forecast)
         print(forecast)
