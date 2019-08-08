@@ -2,13 +2,13 @@
 
 
 {% block content %}
-
+{% load static %}
 <ul>
 
 
 <br>
 <div align="right">
- <a href="{% url 'ppdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
+ <a href="{% url 'ppdf_view' all_details.id %}"><span style="color:orange;border:2px solid red; padding:5px;">Downloand PDF </span> </a><br>
 </div> 
 
 <br>
@@ -33,7 +33,6 @@
 
 <br>
 
-<h1>lololololo</h1>
 <img src="{% static 'PredictionEngine/static/img/sarima_result.png'%}" width=700 height=auto />
 
 {% if  image_base64g %}
@@ -60,7 +59,7 @@
 {% endif %}
 
 <br>
-Foreign exchange earning in 2018(in NPR million):<b>{{next_year_value}}<b>
+<span style="padding-bottom:50px; font-size:20px; color:#26a307; padding-left:20px;">Foreign exchange earning in 2018(in NPR million):<b>{{next_year_value}}</b></span>
 
 
 

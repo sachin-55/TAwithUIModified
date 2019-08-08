@@ -82,13 +82,13 @@ def PDFF(request,id,*args, **kwargs):
     title=all_details.title
     response=predict_detail(request,id)
     html_table=response.context_data['html_table']
-    image_base64=response.context_data['image_base64']
+    # image_base64=response.context_data['image_base64']
     
    
     context = {
     'all_details': all_details ,
     'html_table': html_table ,
-    'image_base64': image_base64 ,
+    # 'image_base64': image_base64 ,
     
      
     } 
@@ -233,7 +233,7 @@ def predict_detail(request,id):
         image_base64g = base64.b64encode(g.getvalue()).decode('utf-8').replace('\n', '')
         g.close()
         mpl.pyplot.clf()
-        x=2018
+        x=2020
         nexts=linear_reg_perdict(dataset,x)
 
 

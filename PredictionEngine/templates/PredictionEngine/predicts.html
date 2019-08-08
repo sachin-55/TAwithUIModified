@@ -7,23 +7,51 @@
  <a href="{% url 'ppdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
 </div>  {% endcomment %}
 <style>
+body{
+  background-color:lightgray;
+}
 .predictionfrom{
   background-color:lightgray;
   margin: -20px 0px 0px 0px;
-  padding:0px 0px 0px 20px;
-
+  padding:0px 10px 0px 20px;
+  display:inline-block;
 }
 input[type='text']{
   height:30px;
-  width:500px;
+  width:350px;
 }
 select{
   height:30px;
-  width:500px;
+  width:350px;
 }
 input[type='checkbox']{
   width:20px;
   height:20px;
+}
+.predictionindex{
+  display:inline-block;
+  background:url('../id1.png');
+  background-color:lightgray;
+   width:45%;
+  float:right;
+ 
+}
+#indextable,.th{
+  border:1px solid black;
+  text-align:center;
+  padding:5px;
+  
+}
+#indextable{
+  margin-right:20px;
+  box-shadow:0px 0px 5px #000000; 
+  
+}
+.access{
+  padding-left:35%;
+  display:inline-block;
+  padding-top:20px;
+ 
 }
 
 </style>
@@ -118,5 +146,59 @@ RECORDS:<br>
 </tr></td>
 
 </table>
+</div >
+<div class="predictionindex">
+<div class="access">
+<strong>ACCESSIBILITY</strong></div><br>
+<sub>(References:-Department of Roads of Nepal(map)-Civil Aviation Authority of Nepal (CAAN)(map))</sub>
+<table id="indextable">
+  <tr>
+    <th class="th">Poor</th>
+    <th class="th">Fair</th>
+    <th class="th">Good</th>
+    <th class="th">Better</th>
+  </tr> 
+   <tr>
+    <td class="th">-Only local track, trials roads</td>
+    <td class="th">-Only graveled or secondary roads </td>
+    <td class="th">-Metaled or primary roads or feeder road<br>-Railways<br>-National domestic airports</td>
+    <td class="th">-Highway<br>-International Airport</td>
+  </tr> 
+</table>
+<div class="access">
+<strong>ACCOMODATION</strong></div><br>
+<sub>(References:-Hotel association Nepal(records))</sub>
+<table id="indextable">
+  <tr>
+    <th class="th">Poor</th>
+    <th class="th">Fair</th>
+    <th class="th">Good</th>
+    <th class="th">Better</th>
+  </tr> 
+   <tr>
+    <td class="th">-Local shops/teahouse and simple home stays</td>
+    <td class="th">-Local hotels and lodges<br>-Well managed or tourism-oriented homestays and guest houses </td>
+    <td class="th">-Tourist standard hotels<br>-Tourist class lodge<br>-Registered resorts</td>
+    <td class="th">- Registered star hotels and lodges<br>-Larger hotels for tourist accommodationt</td>
+  </tr> 
+</table>
+<div class="access">
+<strong>HEALTH & MEDICAL</strong></div><br>
+<sub>(References:-Ministry of health and population(map))</sub>
+<table id="indextable">
+  <tr>
+    <th class="th">Poor</th>
+    <th class="th">Fair</th>
+    <th class="th">Good</th>
+    <th class="th">Better</th>
+  </tr> 
+   <tr>
+    <td class="th">-Only simple sub-health post and health posts</td>
+    <td class="th">-Primary health care center<br>-Community hospital </td>
+    <td class="th">-Private clinics<br>-Private small hospitals<br>-District hospitals</td>
+    <td class="th">-Zonal, Regional Central gov hospitals</td>
+  </tr> 
+</table>
+
 </div>
 {% endblock content %}

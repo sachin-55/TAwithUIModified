@@ -54,14 +54,12 @@
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
-            <div class="box-header well">
-                <h2><i class="glyphicon glyphicon-home"></i> Introduction</h2>
-            </div>
+            
             <div class="box-content row">
                 <div class="col-lg-7 col-md-12">
                       {% block img_content %}
                         <a href={% url 'detail' 1 %}>
-                            <img src="{% static 'img/id1.png'%}" width=300 height=auto />
+                            <img src="{% static 'img/id1.png'%}" width=300 height=auto title="Click for detail"/>
                         </a>
 
 
@@ -70,6 +68,7 @@
         </div>
     </div>
 </div>
+
 
 
 {% endblock content %}
