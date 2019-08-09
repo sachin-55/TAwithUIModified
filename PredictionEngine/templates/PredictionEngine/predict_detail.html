@@ -32,15 +32,12 @@
 </br></br>
 <div style="background-color:rgba(182, 219, 191,0.7); padding:20px;">
 <div style="padding-left:20px;font-size:25px;">
-Select year 
+Select year :
 <div style="display:inline-block;">
 
 <form method="GET" action="{% url 'predict_detail' 1 %}" value="{{request.GET.selectyear}}">{% csrf_token %}
-<select name="selectyear">
-  <option value="2018">2018</option>
-  <option value="2019">2019</option>
-  <option value="2020">2020</option>
-</select>
+<input type="number" placeholder="Enter Year" name="selectyear">
+  
 <input type="submit" value="Predict">
 </form>
 </div>

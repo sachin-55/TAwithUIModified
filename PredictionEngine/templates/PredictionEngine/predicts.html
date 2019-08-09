@@ -2,6 +2,7 @@
 
 
 {% block content %}
+{% load static%}
 {% comment %} 
 <div align="right">
  <a href="{% url 'ppdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
@@ -146,6 +147,11 @@ RECORDS:<br>
 </tr></td>
 
 </table>
+<br><br>
+
+{% comment %} <img src="{% static 'img/pid2.png'%}" width=700 height=auto /> {% endcomment %}
+<br><br><br>
+
 </div >
 <div class="predictionindex">
 <div class="access">
@@ -199,6 +205,7 @@ RECORDS:<br>
     <td class="th">-Zonal, Regional Central gov hospitals</td>
   </tr> 
 </table>
+
 
 </div>
 {% endblock content %}

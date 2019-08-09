@@ -34,6 +34,14 @@ from keras.layers import Dense
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import acf,pacf
 from statsmodels.iolib.smpickle import load_pickle
+
+
+# import adjustText as aT
+from geopandas import GeoDataFrame
+from shapely.geometry import Point
+import matplotlib.pyplot as plt
+
+
 def main():
 
     def run_models():
@@ -370,6 +378,21 @@ def main():
         fp="assets/NepalMaps-master/baselayers/NPL_adm/NPL_adm3.shp"
 
         map_df = gpd.read_file(fp)
+        
+
+        
+
+
+        # fig, ax = map_df.plot(figsize = (15, 12), color = "whitesmoke", edgecolor = "lightgrey", linewidth = 0.5)
+        # texts = []
+
+
+
+
+
+
+
+
 
         #joining file
 
@@ -379,8 +402,17 @@ def main():
 
         vmin, vmax = 1, 15  #data min - max values
 
-        fig, ax = mpl.pyplot.subplots(1, figsize=(15, 7)) #number of figure and size axis
 
+        map_df["center"] = map_df["geometry"].centroid
+        za_points = map_df.copy()
+        za_points.set_geometry("center", inplace = True)
+
+        fig, ax = mpl.pyplot.subplots(1, figsize=(15, 7)) #number of figure and size axis
+        for x, y, label in zip(za_points.geometry.x, za_points.geometry.y, za_points["NAME_3"]):
+            texts.append(plt.text(x, y, label, fontsize = 8))
+        # aT.adjust_text(texts, force_points=0.3, force_text=0.8, expand_points=(1,1), expand_text=(1,1), 
+        # arrowprops=dict(arrowstyle="-", color='grey', lw=0.5))
+        
         #plotting map
 
         merged.plot(column = variable, cmap='Blues', linewidth = 0.8,ax=ax, edgecolor = '0.8')
@@ -402,9 +434,16 @@ def main():
 
         #storing plots in bytes
         
-        mpl.pyplot.savefig('AnalysisEngine/static/img/id6.png', dpi=600,bbox_inches='tight')
+        mpl.pyplot.savefig('AnalysisEngine/static/img/id6.png', dpi=700,bbox_inches='tight')
     
         mpl.pyplot.clf()
+
+
+
+
+
+
+
 
         #Gross foreign exchange earning from tourism
         data=pd.read_csv("assets/gross foreign exchange earning from tourism.csv",header=0,index_col=0)
