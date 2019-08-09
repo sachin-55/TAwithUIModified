@@ -39,7 +39,11 @@ from .utils import render_to_pdf
 
 
 
-dic=[]
+
+contextid1=[]
+contextid2=[]
+
+
 # Create your views here.
 
 def predict_view(request):
@@ -76,24 +80,25 @@ def listpicview(request,id):
 
 def PDFF(request,id,*args, **kwargs):
     
-    template = get_template('pdf_format.html')
+    template = get_template('pdf_format2.html')
 
     all_details=Predictions.objects.get(id=id)
     title=all_details.title
     response=predict_detail(request,id)
     html_table=response.context_data['html_table']
-    # image_base64=response.context_data['image_base64']
-    
+    html_nexts=response.context_data['html_nexts']
    
     context = {
     'all_details': all_details ,
     'html_table': html_table ,
-    # 'image_base64': image_base64 ,
     
+    'c1': contextid1 ,
+    'c2': contextid2 ,
+    'c3': html_nexts ,
      
     } 
     html = template.render(context)
-    pdf = render_to_pdf('pdf_format.html', context)
+    pdf = render_to_pdf('pdf_format2.html', context)
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = title+".pdf"
@@ -111,25 +116,15 @@ def PDFF(request,id,*args, **kwargs):
 
 def predict_detail(request,id):
     if (id==1):
-        find_year=2018
-        if request.method== 'GET'and 'selectyear' in request.GET :
-            find_year=int(request.GET.get('selectyear'))
         #data collecting...converting dataset to html....
-        data=pd.read_csv("assets\gross foreign exchange earning from tourism.csv",header=0,index_col=0)
+        data=pd.read_csv("assets\gross foreign exchange earning from tourism.csv",header=0)
         df=data.iloc[:5]
         html_table_template = df.to_html(index=False)
         html_table=data.to_html(index=False)
         #data plotting/visualizing........
-       
         
-        data.plot()
 
-        #storing plots in bytes
-        f = io.BytesIO()
-        mpl.pyplot.savefig(f, format="png", dpi=600,bbox_inches='tight')
-        image_base64 = base64.b64encode(f.getvalue()).decode('utf-8').replace('\n', '')
-        f.close()
-        mpl.pyplot.clf()
+       
         # getting details of id
         all_details=Predictions.objects.get(id=id)
 
@@ -203,7 +198,7 @@ def predict_detail(request,id):
             X=dataset.iloc[:,0].values
             Y=dataset.iloc[:,1].values
             b0,b1 = coefficients(X,Y)
-            y_predict= b0 + b1 * test_x 
+            y_predict= b0 + b1 * test_x
             return y_predict
 
 
@@ -223,12 +218,23 @@ def predict_detail(request,id):
         x = X
         y1 = b0 + b1 * x
         y2= Y
-
-        dataset.plot.line(x='fiscal  year start ', y='Net received foreign exchange earning(NRs in million)')
+        dataset.plot.line(x='starting fiscal  year ', y='Net received foreign exchange earning(NRs in million)')
+        mpl.pyplot.scatter(X,Y,color='k')
+        mpl.pyplot.show()
+         #storing plots in bytes
+        f = io.BytesIO()
+        mpl.pyplot.savefig(f, format="png", dpi=600,bbox_inches='tight')
+        image_base64 = base64.b64encode(f.getvalue()).decode('utf-8').replace('\n', '')
+        f.close()
+        mpl.pyplot.clf()
+        
+        dataset.plot.line(x='starting fiscal  year ', y='Net received foreign exchange earning(NRs in million)')
         mpl.pyplot.plot(x,y1,color='red')
 
         mpl.pyplot.scatter(x,y2,color='k')
         mpl.pyplot.show()
+        mpl.pyplot.savefig('PredictionEngine/static/img/id11.png', dpi=600,bbox_inches='tight')
+        
          #storing plots in bytes
         g = io.BytesIO()
         #fig.savefig(f, format="png", dpi=600,bbox_inches='tight')
@@ -236,14 +242,27 @@ def predict_detail(request,id):
         image_base64g = base64.b64encode(g.getvalue()).decode('utf-8').replace('\n', '')
         g.close()
         mpl.pyplot.clf()
+        nexts=0
+        year=2018
+        submitt=request.POST.get("year_submit")
+        if(submitt=='PREDICT' and int(float(request.POST.get("year"))) > 1995):
+            year=int(float(request.POST.get("year")))
+            contextid1.clear() 
+            
+        nexts=linear_reg_perdict(dataset,year) 
         
-        x=find_year
-        nexts=linear_reg_perdict(dataset,x)
+        contextid1.append({year:nexts})
+       
+
+                
 
 
 
 
 
+
+
+        
 
 
          #parsing suitable context for redering...
@@ -251,10 +270,11 @@ def predict_detail(request,id):
         'all_details':all_details ,
         'html_table':html_table ,
         'html_table_template': html_table_template,
+        'html_nexts':html_table ,
         'image_base64':image_base64 ,
         'image_base64g':image_base64g ,
         'next_year_value':nexts ,
-        'year':x,
+        'year':year,
        
         }
         return TemplateResponse(request,'PredictionEngine/predict_detail.html',context)
@@ -268,7 +288,7 @@ def predict_detail(request,id):
         html_table=data.to_html(index=False)
         
         
-
+        all_details=Predictions.objects.get(id=id)
         place=request.POST.get("place")
         purpose=request.POST.get("Major purpose of visit")
         ACCESSIBILITY=request.POST.get("ACCESSIBILITY STATUS")
@@ -424,7 +444,7 @@ def predict_detail(request,id):
 
             # Predicting a single new observation
             """Predict if the location with the following informations involves certain percentage of total tourist arrivals:
-            place:    
+            place: Example   
             Year: 2018
             No.of other tourist attraction spots(within 25km radius): 2
             No. of available major tourist activities  nearby: 3
@@ -484,25 +504,19 @@ def predict_detail(request,id):
             print(new_prediction_value)
 
             #dic[place]=new_prediction_value
-            dic.append({place:new_prediction_value})
-
-       
-
-        
-
-
-
-
-        
-
+            contextid2.append({place:new_prediction_value})
+            
+           
         
 
         context = {
+        'all_details':all_details ,
         'new_prediction' :new_prediction_value ,  
         'place':place ,
         'html_table':html_table ,
         'html_table_template': html_table_template,
-        'predicks':dic ,
+        'html_nexts':html_table ,
+        'predicks':contextid2 ,
         
 
        
@@ -513,52 +527,54 @@ def predict_detail(request,id):
 
 
     if (id==3):
-         #data collecting...converting dataset to html....
-         df = pd.read_csv('assets/Touristarrival_monthly.csv')
-         df1=df.iloc[:5]
-         html_table_template = df1.to_html(index=False)
-         html_table=df.to_html(index=False)
-         
-         # Model extraction and forecast
-         model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
-         forecast=model_fitted.forecast(len(df)-250)
-         print(forecast)
-         forecast=np.exp(forecast)
-         print(forecast)
-       
- 
-         forecaste=model_fitted.forecast(len(df)-214)
-         forecast_next=forecaste[62:]
-         forecast_next=np.exp(forecast_next)
-         print(forecast_next)
-         print (type(forecast_next))
-         # getting details of id
-         all_details=Predictions.objects.get(id=id)
-         No_tourists=forecast_next.astype(np.int64)
-         nexts=pd.DataFrame(No_tourists.items(),columns=["Year","No of Tourist Arrivals"])
-         html_nexts=nexts.to_html(index=False)
- 
- 
- 
- 
+        #data collecting...converting dataset to html....
+        df = pd.read_csv('assets/Touristarrival_monthly.csv')
+        df1=df.iloc[:5]
+        html_table_template = df1.to_html(index=False)
+        html_table=df.to_html(index=False)
         
- 
- 
- 
- 
- 
- 
-          #parsing suitable context for redering...
-         context = {
-         'all_details':all_details ,
-         'html_table':html_table ,
-         'html_table_template': html_table_template,
-       
-         'next_years_values':nexts ,
-         'html_nexts':html_nexts,
+        # Model extraction and forecast
+        model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
+        forecast=model_fitted.forecast(len(df)-250)
+        print(forecast)
+        forecast=np.exp(forecast)
+        print(forecast)
+      
+
+        forecaste=model_fitted.forecast(len(df)-214)
+        forecast_next=forecaste[62:]
+        forecast_next=np.exp(forecast_next)
+        print(forecast_next)
+        print (type(forecast_next))
+        # getting details of id
+        all_details=Predictions.objects.get(id=id)
+        No_tourists=forecast_next.astype(np.int64)
+        nexts=pd.DataFrame(No_tourists.items(),columns=["Year","No of Tourist Arrivals"])
+        html_nexts=nexts.to_html(index=False)
+
         
-         }
-         return TemplateResponse(request,'PredictionEngine/predict_detail3.html',context)
+
+
+
+
+       
+
+
+
+
+
+
+         #parsing suitable context for redering...
+        context = {
+        'all_details':all_details ,
+        'html_table':html_table ,
+        'html_table_template': html_table_template,
+      
+        'next_years_values':nexts ,
+        'html_nexts':html_nexts,
+       
+        }
+        return TemplateResponse(request,'PredictionEngine/predict_detail3.html',context)
 
 
 

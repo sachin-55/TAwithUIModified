@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 	'AnalysisEngine' ,
 	'PredictionEngine' ,
 	'SearchEngine' ,
-    'APIEngine' ,
+	'APIEngine' ,
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'TourismAnalytics.wsgi.application'
 #specify your database engi
 DATABASES = {
 	
-        'default': {
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tourismanalyticsdb',
         'USER': 'root' ,
@@ -90,6 +90,7 @@ DATABASES = {
         'PORT': '3306' ,
         }   
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

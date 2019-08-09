@@ -10,7 +10,7 @@
 
 <br>
 <div align="right">
- <a href="{% url 'pdf_view' all_details.id %}"><span style="color:orange">Downloand PDF </span> </a><br>
+ <a href="{% url 'pdf_view' all_details.id %}"><span style="color:orange;border:2px solid red; padding:5px;margin-right:10px;">Downloand PDF </span> </a><br>
 </div>
 
 <br>
@@ -61,7 +61,7 @@
 {% endif %}
 {% if all_details.id == 6 %}
 
-<img src="{% static 'img/id6.png'%}" width=1000 height=auto />
+<img src="{% static 'img/id6.png'%}" width=1200 height=auto />
 
 {% endif %}
 {% endblock content %}

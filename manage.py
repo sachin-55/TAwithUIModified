@@ -34,13 +34,9 @@ from keras.layers import Dense
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import acf,pacf
 from statsmodels.iolib.smpickle import load_pickle
-
-
-# import adjustText as aT
 from geopandas import GeoDataFrame
 from shapely.geometry import Point
 import matplotlib.pyplot as plt
-
 
 def main():
 
@@ -53,7 +49,7 @@ def main():
         
         
 
-        # print(dataset.dtypes)
+        print(dataset.dtypes)
         
             
 
@@ -273,7 +269,7 @@ def main():
         mpl.pyplot.savefig('PredictionEngine/static/img/sarima_result.png', dpi=600,bbox_inches='tight')
         mpl.pyplot.clf()
 
-        forecaste=model_fitted.forecast(len(df)-238)
+        forecaste=model_fitted.forecast(len(df)-214)
         forecast_next=forecaste[62:]
         forecast_next=np.exp(forecast_next)
         print(forecast_next)
@@ -365,7 +361,7 @@ def main():
         mpl.pyplot.savefig('AnalysisEngine/static/img/id5.png', dpi=600,bbox_inches='tight')
         mpl.pyplot.clf()
 
-        #No. of tourists destinations distribution map
+         #No. of tourists destinations distribution map
 
 
         data=pd.read_csv("assets/nepal-district.csv")
@@ -410,8 +406,7 @@ def main():
         fig, ax = mpl.pyplot.subplots(1, figsize=(15, 7)) #number of figure and size axis
         for x, y, label in zip(za_points.geometry.x, za_points.geometry.y, za_points["NAME_3"]):
             texts.append(plt.text(x, y, label, fontsize = 8))
-        # aT.adjust_text(texts, force_points=0.3, force_text=0.8, expand_points=(1,1), expand_text=(1,1), 
-        # arrowprops=dict(arrowstyle="-", color='grey', lw=0.5))
+
         
         #plotting map
 
@@ -437,22 +432,6 @@ def main():
         mpl.pyplot.savefig('AnalysisEngine/static/img/id6.png', dpi=700,bbox_inches='tight')
     
         mpl.pyplot.clf()
-
-
-
-
-
-
-
-
-        #Gross foreign exchange earning from tourism
-        data=pd.read_csv("assets/gross foreign exchange earning from tourism.csv",header=0,index_col=0)
-        data.plot()
-       
-        mpl.pyplot.savefig('AnalysisEngine/static/img/pid1.png',dpi=600,bbox_inches='tight')
-        
-        mpl.pyplot.clf()
-
 
 
 
