@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 	'AnalysisEngine' ,
 	'PredictionEngine' ,
 	'SearchEngine' ,
-	'APIEngine' ,
+    'APIEngine' ,
 ]
 
 MIDDLEWARE = [
