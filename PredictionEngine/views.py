@@ -513,173 +513,52 @@ def predict_detail(request,id):
 
 
     if (id==3):
-        #data collecting...converting dataset to html....
-        df = pd.read_csv('assets/Touristarrival_monthly.csv')
-        df1=df.iloc[:5]
-        html_table_template = df1.to_html(index=False)
-        html_table=df.to_html(index=False)
-        #data observation and log transformation
-        # df.index=pd.to_datetime(df['Month'])
-        # df['#Tourists'].plot()
-        # mpl.pyplot.ylabel("No.of Toursits Arrivals ")
-        # mpl.pyplot.xlabel("Year")
-        # mpl.pyplot.show()
-        #  #storing plots in bytes
-        # f = io.BytesIO()
-        # mpl.pyplot.savefig(f, format="png", dpi=600,bbox_inches='tight')
-        # image_base64 = base64.b64encode(f.getvalue()).decode('utf-8').replace('\n', '')
-        # f.close()
-        # mpl.pyplot.clf()
-
-        # series=df['#Tourists']
-        # logtransformed=np.log(series)
-        # logtransformed.plot()
-        # mpl.pyplot.ylabel("log Scale(No.of Toursits Arrivals) ")
-        # mpl.pyplot.xlabel("Year")
-        # mpl.pyplot.show()
-        #  #storing plots in bytes
-        # g = io.BytesIO()
-        # mpl.pyplot.savefig(g, format="png", dpi=600,bbox_inches='tight')
-        # image_base64g = base64.b64encode(g.getvalue()).decode('utf-8').replace('\n', '')
-        # f.close()
-        # mpl.pyplot.clf()
-        # #Train test split
-        # percent_training=0.80
-        # split_point=round(len(series)*percent_training)
-        # print(split_point)
-        # training , testing = series[0:split_point] , series[split_point:]
-        # training=np.log(training)
-
-
+         #data collecting...converting dataset to html....
+         df = pd.read_csv('assets/Touristarrival_monthly.csv')
+         df1=df.iloc[:5]
+         html_table_template = df1.to_html(index=False)
+         html_table=df.to_html(index=False)
+         
+         # Model extraction and forecast
+         model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
+         forecast=model_fitted.forecast(len(df)-250)
+         print(forecast)
+         forecast=np.exp(forecast)
+         print(forecast)
+       
+ 
+         forecaste=model_fitted.forecast(len(df)-214)
+         forecast_next=forecaste[62:]
+         forecast_next=np.exp(forecast_next)
+         print(forecast_next)
+         print (type(forecast_next))
+         # getting details of id
+         all_details=Predictions.objects.get(id=id)
+         No_tourists=forecast_next.astype(np.int64)
+         nexts=pd.DataFrame(No_tourists.items(),columns=["Year","No of Tourist Arrivals"])
+         html_nexts=nexts.to_html(index=False)
+ 
+ 
+ 
+ 
         
-        # #differencing to achieve stationarity
-        # training_diff=training.diff(periods=1).values[1:]
-
-        # #plot of residual log differenced series
-        # mpl.pyplot.plot(training_diff)
-        # mpl.pyplot.title("Tourist arrivals data log-differenced")
-        # mpl.pyplot.xlabel("Years")
-        # mpl.pyplot.ylabel("Toursits arrivals")
-
-
-        # #ACF and PACF plots 1(with log differenced training data)
-        # lag_acf=acf(training_diff,nlags=40)
-        # lag_pacf=pacf(training_diff,nlags=40,method='ols')
-
-        # #plot ACF
-        # mpl.pyplot.figure(figsize=(15,5))
-        # mpl.pyplot.subplot(121)
-        # mpl.pyplot.stem(lag_acf)
-        # mpl.pyplot.axhline(y=0,linestyle='-',color='black')
-        # mpl.pyplot.axhline(y=-1.96/np.sqrt(len(training)),linestyle='--',color='gray')
-        # mpl.pyplot.axhline(y=1.96/np.sqrt(len(training)),linestyle='--',color='gray')
-        # mpl.pyplot.xlabel('lag')
-        # mpl.pyplot.ylabel("ACF")
-        #  #storing plots in bytes
-        # h = io.BytesIO()
-        # mpl.pyplot.savefig(h, format="png", dpi=600,bbox_inches='tight')
-        # image_base64h = base64.b64encode(h.getvalue()).decode('utf-8').replace('\n', '')
-        # h.close()
-        # mpl.pyplot.clf()
-
-        # #plot PACF
-        # mpl.pyplot.figure(figsize=(15,5))
-        # mpl.pyplot.subplot(122)
-        # mpl.pyplot.stem(lag_pacf)
-        # mpl.pyplot.axhline(y=0,linestyle='-',color='black')
-        # mpl.pyplot.axhline(y=-1.96/np.sqrt(len(training)),linestyle='--',color='gray')
-        # mpl.pyplot.axhline(y=1.96/np.sqrt(len(training)),linestyle='--',color='gray')
-        # mpl.pyplot.xlabel('lag')
-        # mpl.pyplot.ylabel("PACF")
-        #  #storing plots in bytes
-        # i = io.BytesIO()
-        # mpl.pyplot.savefig(i, format="png", dpi=600,bbox_inches='tight')
-        # image_base64i = base64.b64encode(i.getvalue()).decode('utf-8').replace('\n', '')
-        # i.close()
-        # mpl.pyplot.clf()
-
-        # #SARIMA Model specification
-        # model=sm.tsa.statespace.SARIMAX(training,order=(2,0,3),seasonal_order=(2,1,0,12),trend='c',enforce_invertibility=False,enforce_stationarity=False)
-
-        # # fit model
-        # model_fit = model.fit()
-
-        # model_fit.save("assets/REG_SARIMA_model.pickle")
-
-        # print(model_fit.summary())
-
-        #plot residual errors
-        # residuals = pd.DataFrame(model_fit.resid)
-        # fig, ax = mpl.pyplot.subplots(1,2)
-        # residuals.plot(title="Residuals", ax=ax[0])
-        # residuals.plot(kind='kde', title='Density', ax=ax[1])
-        # mpl.pyplot.show()
-        # print(residuals.describe())
-
-        # Model evaluation and forecast
-        model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
-        forecast=model_fitted.forecast(len(df)-214)
-        print(forecast)
-        forecast=np.exp(forecast)
-        print(forecast)
-        #plot forecast results and display RMSE
-        # mpl.pyplot.figure(figsize=(10,5))
-        # mpl.pyplot.plot(forecast,'r')
-        # mpl.pyplot.plot(series,'b')
-        # mpl.pyplot.legend(['Predicted test values','Actual data values'])
-
-        # mpl.pyplot.title('RMSE:%.2f'% np.sqrt(sum((forecast-testing)**2)/len(testing)))
-        # mpl.pyplot.ylabel("No.of Toursits Arrivals Monthly")
-        # mpl.pyplot.xlabel("Year")
-        # mpl.pyplot.autoscale(enable='True',axis='x',tight=True)
-        # mpl.pyplot.axvline(x=series.index[split_point],color='black');
-         #storing plots in bytes
-        # j = io.BytesIO()
-        # mpl.pyplot.savefig(j, format="png", dpi=600,bbox_inches='tight')
-        # image_base64j = base64.b64encode(j.getvalue()).decode('utf-8').replace('\n', '')
-        # j.close()
-        # mpl.pyplot.clf()
-
-        forecaste=model_fitted.forecast(len(df)-238)
-        forecast_next=forecaste[62:]
-        forecast_next=np.exp(forecast_next)
-        print(forecast_next)
-        # mpl.pyplot.figure(figsize=(10,5))
-        # mpl.pyplot.plot(forecast_next,'r')
-        # mpl.pyplot.plot(series,'b')
-        # mpl.pyplot.legend(['Predicted next steps values'])
-        # mpl.pyplot.title('Monthly tourist arrivals predictions')
-        # mpl.pyplot.ylabel("No.of Toursits Arrivals ")
-        # mpl.pyplot.xlabel("Year")
-        # mpl.pyplot.autoscale(enable='True',axis='x',tight=True)
-
-        # #storing plots in bytes
-        # k = io.BytesIO()
-        # mpl.pyplot.savefig(k, format="png", dpi=600,bbox_inches='tight')
-        # image_base64k = base64.b64encode(k.getvalue()).decode('utf-8').replace('\n', '')
-        # k.close()
-        # mpl.pyplot.clf()
-        # getting details of id
-        all_details=Predictions.objects.get(id=id)
-        nexts=forecast_next
-
+ 
+ 
+ 
+ 
+ 
+ 
+          #parsing suitable context for redering...
+         context = {
+         'all_details':all_details ,
+         'html_table':html_table ,
+         'html_table_template': html_table_template,
        
-
-
-
-
-
-
-         #parsing suitable context for redering...
-        context = {
-        'all_details':all_details ,
-        'html_table':html_table ,
-        'html_table_template': html_table_template,
-      
-        'next_years_values':nexts ,
-       
-        }
-        return TemplateResponse(request,'PredictionEngine/predict_detail3.html',context)
+         'next_years_values':nexts ,
+         'html_nexts':html_nexts,
+        
+         }
+         return TemplateResponse(request,'PredictionEngine/predict_detail3.html',context)
 
 
 
