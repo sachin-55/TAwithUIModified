@@ -330,14 +330,22 @@ def main():
         data=pd.read_csv("assets/Economic_indicators_of_hotels.csv",header=0)       
         df1=data[['Economic Indicators','Fiscal Year','val']]
         heatmap1_data = pd.pivot_table(df1, values='val',index=['Economic Indicators'],columns='Fiscal Year')
-        sns_plot=sns.heatmap(heatmap1_data, cmap="YlGnBu")
+        # sns_plot=sns.heatmap(heatmap1_data, cmap="YlGnBu")
+        sns_plot=sns.heatmap(heatmap1_data, cmap="YlGnBu",cbar_kws={'label': 'NPR(million)'})
         mpl.pyplot.savefig('AnalysisEngine/static/img/id3.png', dpi=600,bbox_inches='tight')
         mpl.pyplot.clf()
 
         #tourist_arrivals_purpose_newlook
+        # data=pd.read_csv("assets/tourist_arrivals_purpose_newlook.csv",header=0 )
+        # data.pivot(index='year', columns='purposes', values='Arrivals').plot(kind='bar')
+        # mpl.pyplot.savefig('AnalysisEngine/static/img/id4.png')
+        # mpl.pyplot.clf()
         data=pd.read_csv("assets/tourist_arrivals_purpose_newlook.csv",header=0 )
-        data.pivot(index='year', columns='purposes', values='Arrivals').plot(kind='bar')
-        mpl.pyplot.savefig('AnalysisEngine/static/img/id4.png')
+        f = plt.figure()
+        data.pivot(index='year', columns='purposes', values='Arrivals').plot(kind='bar',ax=f.gca(),legend=False)
+        plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+        f.subplots_adjust(right=0.6)
+        mpl.pyplot.savefig('AnalysisEngine/static/img/id4.png') 
         mpl.pyplot.clf()
 
         mpl.pyplot.axhline(0, color='k')
@@ -357,7 +365,8 @@ def main():
         data=pd.read_csv("assets/No_tourist_industries_guides.csv")
         df1=data[['Industries/guides','year','numbers']]
         heatmap1_data = pd.pivot_table(df1, values='numbers',index=['Industries/guides'],columns='year')
-        sns.heatmap(heatmap1_data, cmap="YlGnBu")
+        # sns.heatmap(heatmap1_data, cmap="YlGnBu")
+        sns_plot=sns.heatmap(heatmap1_data, cmap="YlGnBu",cbar_kws={'label': 'Numbers'})
         mpl.pyplot.savefig('AnalysisEngine/static/img/id5.png', dpi=600,bbox_inches='tight')
         mpl.pyplot.clf()
 
@@ -375,20 +384,8 @@ def main():
 
         map_df = gpd.read_file(fp)
         
-
-        
-
-
         # fig, ax = map_df.plot(figsize = (15, 12), color = "whitesmoke", edgecolor = "lightgrey", linewidth = 0.5)
         # texts = []
-
-
-
-
-
-
-
-
 
         #joining file
 
