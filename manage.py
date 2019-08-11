@@ -49,7 +49,7 @@ def main():
         
         
 
-        print(dataset.dtypes)
+        # print(dataset.dtypes)
         
             
 
@@ -68,12 +68,12 @@ def main():
 
 
 
-        print(dataset.head(5))
+        # print(dataset.head(5))
         X = dataset.iloc[:,1:8].values
-        print(X[:,3])
+        # print(X[:,3])
 
         y = dataset.iloc[:,10].values
-        print(y)
+        # print(y)
         # Encoding categorical data
         
         labelencoder_X_3 = LabelEncoder()
@@ -83,7 +83,7 @@ def main():
 
         X[:, 3]
         X[:,0:4]
-        print(X)
+        # print(X)
 
 
         onehotencoder = OneHotEncoder(categorical_features = [3] )
@@ -91,8 +91,8 @@ def main():
 
         X = X[:, 1:]
 
-        print('\n'.join([''.join(['{:9}'.format(item) for item in row]) 
-            for row in X]))
+        # print('\n'.join([''.join(['{:9}'.format(item) for item in row]) 
+            # for row in X]))
 
 
         # Splitting the dataset into the Training set and Test set
@@ -182,7 +182,7 @@ def main():
         #Train test split
         percent_training=0.80
         split_point=round(len(series)*percent_training)
-        print(split_point)
+        # print(split_point)
         training , testing = series[0:split_point] , series[split_point:]
         training=np.log(training)
 
@@ -238,7 +238,7 @@ def main():
 
         model_fit.save("assets/REG_SARIMA_model.pickle")
 
-        print(model_fit.summary())
+        # print(model_fit.summary())
 
         #plot residual errors
         # residuals = pd.DataFrame(model_fit.resid)
@@ -251,9 +251,9 @@ def main():
         # Model evaluation and forecast
         model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
         forecast=model_fitted.forecast(len(df)-250)
-        print(forecast)
+        # print(forecast)
         forecast=np.exp(forecast)
-        print(forecast)
+        # print(forecast)
         #plot forecast results and display RMSE
         mpl.pyplot.figure(figsize=(10,5))
         mpl.pyplot.plot(forecast,'r')
@@ -272,7 +272,7 @@ def main():
         forecaste=model_fitted.forecast(len(df)-214)
         forecast_next=forecaste[62:]
         forecast_next=np.exp(forecast_next)
-        print(forecast_next)
+        # print(forecast_next)
         mpl.pyplot.figure(figsize=(10,5))
         mpl.pyplot.plot(forecast_next,'r')
         mpl.pyplot.plot(series,'b')

@@ -372,7 +372,7 @@ def predict_detail(request,id):
             #print(sum(activities))
             count=sum(activities)
 
-            print(dataset.dtypes)
+            # print(dataset.dtypes)
           
              
 
@@ -391,12 +391,12 @@ def predict_detail(request,id):
 
 
 
-            print(dataset.head(5))
+            # print(dataset.head(5))
             X = dataset.iloc[:,1:8].values
-            print(X[:,3])
+            # print(X[:,3])
 
             y = dataset.iloc[:,10].values
-            print(y)
+            # print(y)
             # Encoding categorical data
             
             labelencoder_X_3 = LabelEncoder()
@@ -406,7 +406,7 @@ def predict_detail(request,id):
 
             X[:, 3]
             X[:,0:4]
-            print(X)
+            # print(X)
 
 
             onehotencoder = OneHotEncoder(categorical_features = [3] )
@@ -414,8 +414,8 @@ def predict_detail(request,id):
 
             X = X[:, 1:]
 
-            print('\n'.join([''.join(['{:9}'.format(item) for item in row]) 
-                for row in X]))
+            # print('\n'.join([''.join(['{:9}'.format(item) for item in row]) 
+                # for row in X]))
 
 
             # Splitting the dataset into the Training set and Test set
@@ -431,8 +431,8 @@ def predict_detail(request,id):
             sc = StandardScaler()
             X_train = sc.fit_transform(X_train)
             X_test = sc.transform(X_test)
-            print(X_train)
-            print(X_test)
+            # print(X_train)
+            # print(X_test)
 
 
 
@@ -501,7 +501,7 @@ def predict_detail(request,id):
             new_prediction = REG_model.predict(sc.transform(np.array([[v1,v2,v3,2018,SPOTS,count,a_status,am_status,m_status]])))
             #new_prediction = REG.predict(sc.transform(np.array([[v1,v2,v3,2018,4,3,3,2,3]])))
             new_prediction_value=abs(np.asscalar(new_prediction))
-            print(new_prediction_value)
+            # print(new_prediction_value)
 
             #dic[place]=new_prediction_value
             contextid2.append({place:new_prediction_value})
@@ -536,16 +536,16 @@ def predict_detail(request,id):
         # Model extraction and forecast
         model_fitted=load_pickle("assets/REG_SARIMA_model.pickle")
         forecast=model_fitted.forecast(len(df)-250)
-        print(forecast)
+        # print(forecast)
         forecast=np.exp(forecast)
-        print(forecast)
+        # print(forecast)
       
 
         forecaste=model_fitted.forecast(len(df)-214)
         forecast_next=forecaste[62:]
         forecast_next=np.exp(forecast_next)
-        print(forecast_next)
-        print (type(forecast_next))
+        # print(forecast_next)
+        # print (type(forecast_next))
         # getting details of id
         all_details=Predictions.objects.get(id=id)
         No_tourists=forecast_next.astype(np.int64)

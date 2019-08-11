@@ -8,3 +8,11 @@ class Search(models.Model):
 
     def __str__(self):
         return self.searchword[:100]
+
+class FeedbackMessage(models.Model):
+    Name=models.TextField(max_length=100)
+    Email=models.TextField(max_length=100)
+    Message=models.TextField(max_length=100)
+
+    def __str__(self):
+        return self.Name[:10]

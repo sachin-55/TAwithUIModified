@@ -1,0 +1,49 @@
+{% extends 'FrontendNavigator/base.html' %}
+{% block content %}
+<style>
+#feedback{
+    background-color:#fdf;
+    padding:30px;
+}
+.title{
+    width:30%;
+    display:inline-block;
+    background-color:rgba(208, 242, 206,0.7);
+    padding:20px;
+    text-align:center;
+   
+}
+.message{
+    width:69%;
+    display:inline-block;
+    background-color:rgba(208, 242, 206,0.7);
+    padding:20px;
+    margin-left:8px;
+
+}
+.lineblock{
+    width:60%;
+    background-color:rgba(161, 147, 146,0.6);
+    text-align:left;
+    margin:10px 5px 0 20%;
+    padding:20px;
+}
+#desc{
+    font-size:30px;
+    color:#4c5461;
+    padding:10px;
+}
+</style>
+
+
+
+<div id="feedback">
+<div id="desc">
+Thank you,<span style="color:#20a818;"> {{name|title}}</span><br>
+Your Feedback will be helpful for future enhancement and improving customer satisfying service.<br></div>
+<div class="lineblock"><div class="title">Your Email </div><div class="message">: {{email}}</div><br></div>
+<div class="lineblock"><div class="title">Your Thoughtful Feedback</div><div class="message">: {{message}}</div></div>
+
+</div>
+
+{% endblock content %}
